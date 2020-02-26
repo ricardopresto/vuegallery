@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img v-bind:src="filename" />
+    <img :src="filename" />
   </div>
 </template>
 
@@ -11,7 +11,16 @@ export default {
   computed: {
     filename: function() {
       return require(`../assets/images/thumbs/${this.image}_th.jpg`);
+    },
+    width: function() {
+      return this.$el.firstChild.naturalWidth;
+    },
+    height: function() {
+      return this.$el.firstChild.naturalHeight;
     }
+  },
+  mounted() {
+    console.log(this.width, this.height);
   }
 };
 </script>
