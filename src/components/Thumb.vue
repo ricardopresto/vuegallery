@@ -12,15 +12,19 @@ export default {
     filename: function() {
       return require(`../assets/images/thumbs/${this.image}_th.jpg`);
     },
-    width: function() {
+    originalWidth: function() {
       return this.$el.firstChild.naturalWidth;
     },
-    height: function() {
+    originalHeight: function() {
       return this.$el.firstChild.naturalHeight;
     }
   },
   mounted() {
-    console.log(this.width, this.height);
+    if (this.originalWidth > this.originalHeight) {
+      console.log("landscape");
+    } else {
+      console.log("portrait");
+    }
   }
 };
 </script>
