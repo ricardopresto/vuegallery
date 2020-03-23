@@ -12,10 +12,24 @@
       />
     </div>
     <div class="previewBackground" v-if="preview" @click="hideImage">
-      <transition-group name="next">
-        <Preview key="preview1" v-if="preview1" :currentImage="currentImage" :aspect="aspect" />
-        <Preview key="preview2" v-if="!preview1" :currentImage="currentImage" :aspect="aspect" />
-      </transition-group>
+      <transition :name="direction">
+        <Preview
+          class="preview"
+          key="preview1"
+          v-if="preview1"
+          :currentImage="currentImage"
+          :aspect="aspect"
+        />
+      </transition>
+      <transition :name="direction">
+        <Preview
+          class="preview"
+          key="preview2"
+          v-if="!preview1"
+          :currentImage="currentImage"
+          :aspect="aspect"
+        />
+      </transition>
     </div>
   </div>
 </template>
@@ -53,12 +67,14 @@ export default {
       this.preview = true;
     },
     nextImage() {
+      this.direction = "next";
       this.currentImageIndex++;
       this.currentImage = this.imageList[this.currentImageIndex];
       this.aspect = this.aspects[this.currentImageIndex];
       this.preview1 = !this.preview1;
     },
     prevImage() {
+      this.direction = "prev";
       this.currentImageIndex--;
       this.currentImage = this.imageList[this.currentImageIndex];
       this.aspect = this.aspects[this.currentImageIndex];
@@ -110,17 +126,30 @@ export default {
   justify-content: center;
   overflow: hidden;
 }
+.preview {
+  position: absolute;
+}
 .next-enter-active,
-.next.leave-active {
+.prev-enter-active,
+.next-leave-active,
+.prev-leave-active {
   transition: all 0.2s;
 }
 .next-enter {
   opacity: 0;
-  transform: translatex(200px);
+  transform: translateX(200px);
 }
 .next-leave-to {
   opacity: 0;
-  transform: translatex(-200px);
+  transform: translateX(-200px);
+}
+.prev-enter {
+  opacity: 0;
+  transform: translateX(-200px);
+}
+.prev-leave-to {
+  opacity: 0;
+  transform: translateX(200px);
 }
 </style>>
 
