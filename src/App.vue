@@ -11,11 +11,15 @@
         @set-aspect="setAspect($event)"
       />
     </div>
-    <div class="preview" v-if="currentPreview == 1" @click="hideImage">
-      <Preview key="preview1" :currentImage="currentImage" :aspect="aspect" />
+    <div class="previewBackground" v-if="preview" @click="hideImage">
+      <transition name="next">
+        <Preview key="preview1" v-if="preview1" :currentImage="currentImage" :aspect="aspect" />
+      </transition>
     </div>
-    <div class="preview" v-if="currentPreview == 2" @click="hideImage">
-      <Preview key="preview2" :currentImage="currentImage" :aspect="aspect" />
+    <div class="previewBackground" v-if="preview" @click="hideImage">
+      <transition name="next">
+        <Preview key="preview2" v-if="!preview1" :currentImage="currentImage" :aspect="aspect" />
+      </transition>
     </div>
   </div>
 </template>
@@ -31,10 +35,12 @@ export default {
       imageList: [],
       aspects: [],
       thumbSize: 200,
-      currentPreview: 0,
+      preview: false,
+      preview1: true,
       currentImage: undefined,
       currentImageIndex: undefined,
-      aspect: undefined
+      aspect: undefined,
+      direction: "next"
     };
   },
   components: { Thumb, Preview },
@@ -48,35 +54,23 @@ export default {
       this.currentImageIndex = imageObject.index;
       this.aspect = this.aspects[this.currentImageIndex];
       this.currentPreview = 1;
+      this.preview = true;
     },
     nextImage() {
-      if (this.currentPreview == 1) {
-        this.currentPreview = 2;
-        this.currentImageIndex++;
-        this.currentImage = this.imageList[this.currentImageIndex];
-        this.aspect = this.aspects[this.currentImageIndex];
-      } else {
-        this.currentPreview = 1;
-        this.currentImageIndex++;
-        this.currentImage = this.imageList[this.currentImageIndex];
-        this.aspect = this.aspects[this.currentImageIndex];
-      }
+      this.currentImageIndex++;
+      this.currentImage = this.imageList[this.currentImageIndex];
+      this.aspect = this.aspects[this.currentImageIndex];
+      this.preview1 = !this.preview1;
     },
     prevImage() {
-      if (this.currentPreview == 1) {
-        this.currentPreview = 2;
-        this.currentImageIndex--;
-        this.currentImage = this.imageList[this.currentImageIndex];
-        this.aspect = this.aspects[this.currentImageIndex];
-      } else {
-        this.currentPreview = 1;
-        this.currentImageIndex--;
-        this.currentImage = this.imageList[this.currentImageIndex];
-        this.aspect = this.aspects[this.currentImageIndex];
-      }
+      this.currentImageIndex--;
+      this.currentImage = this.imageList[this.currentImageIndex];
+      this.aspect = this.aspects[this.currentImageIndex];
+      this.preview1 = !this.preview1;
     },
     hideImage() {
       this.currentPreview = 0;
+      this.preview = false;
     },
     key(event) {
       if (event.key == "ArrowRight") {
@@ -109,7 +103,7 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   grid-gap: 5px;
 }
-.preview {
+.previewBackground {
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -118,6 +112,18 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.next-enter-active,
+.next.leave-active {
+  transition: all 0.2s;
+}
+.next-enter {
+  opacity: 0;
+  transform: translatex(200px);
+}
+.next-leave-to {
+  opacity: 0;
+  transform: translatex(-200px);
 }
 </style>>
 
