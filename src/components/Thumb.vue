@@ -17,6 +17,9 @@ export default {
     },
     originalHeight: function() {
       return this.$el.firstChild.naturalHeight;
+    },
+    aspectRatio: function() {
+      return this.originalWidth / this.originalHeight;
     }
   },
   data() {
@@ -34,7 +37,10 @@ export default {
   },
   methods: {
     imageClick() {
-      this.$emit("image-click", this.image);
+      this.$emit("image-click", {
+        image: this.image,
+        aspect: this.aspectRatio
+      });
     }
   }
 };
@@ -47,5 +53,6 @@ export default {
   justify-content: center;
   border: 1px solid lightgrey;
   padding: 5px;
+  margin: 5px;
 }
 </style>

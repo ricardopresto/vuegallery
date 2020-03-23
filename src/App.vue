@@ -10,7 +10,7 @@
       />
     </div>
     <div id="preview" v-if="showImage == true" @click="hideImage">
-      <Preview :currentImage="currentImage" />
+      <Preview :currentImage="currentImage" :aspect="aspect" />
     </div>
   </div>
 </template>
@@ -26,7 +26,8 @@ export default {
       imageList: [],
       thumbSize: 200,
       showImage: false,
-      currentImage: undefined
+      currentImage: undefined,
+      aspect: undefined
     };
   },
   components: { Thumb, Preview },
@@ -34,8 +35,9 @@ export default {
     this.imageList = imageList;
   },
   methods: {
-    imageClick(image) {
-      this.currentImage = image;
+    imageClick(imageObject) {
+      this.currentImage = imageObject.image;
+      this.aspect = imageObject.aspect;
       this.showImage = true;
       console.log(this.currentImage);
     },
@@ -45,6 +47,14 @@ export default {
   }
 };
 </script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+</style>
 
 <style scoped>
 #app {
@@ -57,10 +67,10 @@ export default {
 }
 #preview {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   top: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(255, 159, 159, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
