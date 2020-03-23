@@ -2,15 +2,20 @@
   <div id="app">
     <div id="grid">
       <Thumb
-        v-for="image in imageList"
-        :key="image"
+        v-for="(image, index) in imageList"
+        :index="index"
+        :key="index"
         :image="image"
         :thumbSize="thumbSize"
         @image-click="imageClick($event)"
+        @set-aspect="setAspect($event)"
       />
     </div>
-    <div id="preview" v-if="showImage == true" @click="hideImage">
-      <Preview :currentImage="currentImage" :aspect="aspect" />
+    <div class="preview" v-if="currentPreview == 1" @click="hideImage">
+      <Preview key="preview1" :currentImage="currentImage" :aspect="aspect" />
+    </div>
+    <div class="preview" v-if="currentPreview == 2" @click="hideImage">
+      <Preview key="preview2" :currentImage="currentImage" :aspect="aspect" />
     </div>
   </div>
 </template>
@@ -24,25 +29,64 @@ export default {
   data() {
     return {
       imageList: [],
+      aspects: [],
       thumbSize: 200,
-      showImage: false,
+      currentPreview: 0,
       currentImage: undefined,
+      currentImageIndex: undefined,
       aspect: undefined
     };
   },
   components: { Thumb, Preview },
   mounted() {
     this.imageList = imageList;
+    window.addEventListener("keydown", this.key);
   },
   methods: {
     imageClick(imageObject) {
       this.currentImage = imageObject.image;
-      this.aspect = imageObject.aspect;
-      this.showImage = true;
-      console.log(this.currentImage);
+      this.currentImageIndex = imageObject.index;
+      this.aspect = this.aspects[this.currentImageIndex];
+      this.currentPreview = 1;
+    },
+    nextImage() {
+      if (this.currentPreview == 1) {
+        this.currentPreview = 2;
+        this.currentImageIndex++;
+        this.currentImage = this.imageList[this.currentImageIndex];
+        this.aspect = this.aspects[this.currentImageIndex];
+      } else {
+        this.currentPreview = 1;
+        this.currentImageIndex++;
+        this.currentImage = this.imageList[this.currentImageIndex];
+        this.aspect = this.aspects[this.currentImageIndex];
+      }
+    },
+    prevImage() {
+      if (this.currentPreview == 1) {
+        this.currentPreview = 2;
+        this.currentImageIndex--;
+        this.currentImage = this.imageList[this.currentImageIndex];
+        this.aspect = this.aspects[this.currentImageIndex];
+      } else {
+        this.currentPreview = 1;
+        this.currentImageIndex--;
+        this.currentImage = this.imageList[this.currentImageIndex];
+        this.aspect = this.aspects[this.currentImageIndex];
+      }
     },
     hideImage() {
-      this.showImage = false;
+      this.currentPreview = 0;
+    },
+    key(event) {
+      if (event.key == "ArrowRight") {
+        this.nextImage();
+      } else if (event.key == "ArrowLeft") {
+        this.prevImage();
+      }
+    },
+    setAspect(aspectObject) {
+      this.aspects[aspectObject.index] = aspectObject.aspect;
     }
   }
 };
@@ -65,7 +109,7 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   grid-gap: 5px;
 }
-#preview {
+.preview {
   position: absolute;
   width: 100vw;
   height: 100vh;

@@ -7,7 +7,7 @@
 <script>
 export default {
   name: "Thumb",
-  props: ["image", "thumbSize"],
+  props: ["image", "index", "thumbSize"],
   computed: {
     filename: function() {
       return require(`../assets/images/thumbs/${this.image}_th.jpg`);
@@ -34,12 +34,13 @@ export default {
     } else {
       this.thumbHeight = this.thumbSize;
     }
+    this.$emit("set-aspect", { index: this.index, aspect: this.aspectRatio });
   },
   methods: {
     imageClick() {
       this.$emit("image-click", {
         image: this.image,
-        aspect: this.aspectRatio
+        index: this.index
       });
     }
   }
