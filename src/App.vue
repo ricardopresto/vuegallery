@@ -12,14 +12,10 @@
       />
     </div>
     <div class="previewBackground" v-if="preview" @click="hideImage">
-      <transition name="next">
+      <transition-group name="next">
         <Preview key="preview1" v-if="preview1" :currentImage="currentImage" :aspect="aspect" />
-      </transition>
-    </div>
-    <div class="previewBackground" v-if="preview" @click="hideImage">
-      <transition name="next">
         <Preview key="preview2" v-if="!preview1" :currentImage="currentImage" :aspect="aspect" />
-      </transition>
+      </transition-group>
     </div>
   </div>
 </template>
@@ -112,6 +108,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 .next-enter-active,
 .next.leave-active {
