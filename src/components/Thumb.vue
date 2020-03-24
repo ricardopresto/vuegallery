@@ -29,11 +29,9 @@ export default {
     };
   },
   mounted() {
-    if (this.originalWidth > this.originalHeight) {
-      this.thumbWidth = this.thumbSize;
-    } else {
-      this.thumbHeight = this.thumbSize;
-    }
+    this.aspectRatio > 1
+      ? (this.thumbWidth = this.thumbSize)
+      : (this.thumbHeight = this.thumbSize);
     this.$emit("set-aspect", { index: this.index, aspect: this.aspectRatio });
   },
   methods: {

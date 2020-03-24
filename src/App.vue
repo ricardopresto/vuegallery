@@ -11,26 +11,26 @@
         @set-aspect="setAspect($event)"
       />
     </div>
-    <div class="previewBackground" v-if="preview" @click="hideImage">
-      <transition :name="direction">
-        <Preview
-          class="preview"
-          key="preview1"
-          v-if="preview1"
-          :currentImage="currentImage"
-          :aspect="aspect"
-        />
-      </transition>
-      <transition :name="direction">
-        <Preview
-          class="preview"
-          key="preview2"
-          v-if="!preview1"
-          :currentImage="currentImage"
-          :aspect="aspect"
-        />
-      </transition>
-    </div>
+    <transition name="appear">
+      <div class="previewBackground" v-if="preview" @click="hideImage">
+        <transition :name="direction">
+          <Preview
+            class="preview"
+            key="preview1"
+            v-if="preview1"
+            :currentImage="currentImage"
+            :aspect="aspect"
+          />
+          <Preview
+            class="preview"
+            key="preview2"
+            v-if="!preview1"
+            :currentImage="currentImage"
+            :aspect="aspect"
+          />
+        </transition>
+      </div>
+    </transition>>
   </div>
 </template>
 
@@ -43,10 +43,10 @@ export default {
   data() {
     return {
       imageList: [],
-      aspects: [],
+      aspectList: [],
       thumbSize: 200,
       preview: false,
-      preview1: true,
+      preview1: false,
       currentImage: undefined,
       currentImageIndex: undefined,
       aspect: undefined,
@@ -60,29 +60,34 @@ export default {
   },
   methods: {
     imageClick(imageObject) {
+      this.direction = "next";
       this.currentImage = imageObject.image;
       this.currentImageIndex = imageObject.index;
-      this.aspect = this.aspects[this.currentImageIndex];
-      this.currentPreview = 1;
+      this.aspect = this.aspectList[this.currentImageIndex];
       this.preview = true;
+      this.preview1 = true;
     },
     nextImage() {
-      this.direction = "next";
-      this.currentImageIndex++;
-      this.currentImage = this.imageList[this.currentImageIndex];
-      this.aspect = this.aspects[this.currentImageIndex];
-      this.preview1 = !this.preview1;
+      if (this.currentImageIndex < this.imageList.length - 1) {
+        this.direction = "next";
+        this.currentImageIndex++;
+        this.currentImage = this.imageList[this.currentImageIndex];
+        this.aspect = this.aspectList[this.currentImageIndex];
+        this.preview1 = !this.preview1;
+      }
     },
     prevImage() {
-      this.direction = "prev";
-      this.currentImageIndex--;
-      this.currentImage = this.imageList[this.currentImageIndex];
-      this.aspect = this.aspects[this.currentImageIndex];
-      this.preview1 = !this.preview1;
+      if (this.currentImageIndex > 0) {
+        this.direction = "prev";
+        this.currentImageIndex--;
+        this.currentImage = this.imageList[this.currentImageIndex];
+        this.aspect = this.aspectList[this.currentImageIndex];
+        this.preview1 = !this.preview1;
+      }
     },
     hideImage() {
-      this.currentPreview = 0;
       this.preview = false;
+      this.preview1 = false;
     },
     key(event) {
       if (event.key == "ArrowRight") {
@@ -92,7 +97,7 @@ export default {
       }
     },
     setAspect(aspectObject) {
-      this.aspects[aspectObject.index] = aspectObject.aspect;
+      this.aspectList[aspectObject.index] = aspectObject.aspect;
     }
   }
 };
@@ -120,7 +125,7 @@ export default {
   width: 100vw;
   height: 100vh;
   top: 0;
-  background: rgba(255, 159, 159, 0.4);
+  background: rgba(255, 255, 255, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -130,26 +135,39 @@ export default {
   position: absolute;
 }
 .next-enter-active,
-.prev-enter-active,
+.prev-enter-active {
+  transition: all 0.2s ease-out;
+}
 .next-leave-active,
 .prev-leave-active {
-  transition: all 0.2s;
+  transition: all 0.2s ease-in;
 }
 .next-enter {
   opacity: 0;
-  transform: translateX(200px);
+  transform: translateX(400px);
 }
 .next-leave-to {
   opacity: 0;
-  transform: translateX(-200px);
+  transform: translateX(-400px);
 }
 .prev-enter {
   opacity: 0;
-  transform: translateX(-200px);
+  transform: translateX(-400px);
 }
 .prev-leave-to {
   opacity: 0;
-  transform: translateX(200px);
+  transform: translateX(400px);
 }
-</style>>
-
+.appear-enter-active {
+  transition: all 0.1s ease-out;
+}
+.appear-enter {
+  opacity: 0;
+}
+.appear-leave-active {
+  transition: all 0.1s ease-out;
+}
+.appear-leave-to {
+  opacity: 0;
+}
+</style>
