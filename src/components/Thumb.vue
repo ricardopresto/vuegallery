@@ -34,12 +34,6 @@ export default {
       thumbHeight: undefined
     };
   },
-  mounted() {
-    //  this.aspectRatio > 1
-    //    ? (this.thumbWidth = this.thumbSize)
-    //    : (this.thumbHeight = this.thumbSize);
-    //  this.$emit("set-aspect", { index: this.index, aspect: this.aspectRatio });
-  },
   methods: {
     imageClick() {
       this.$emit("image-click", {
