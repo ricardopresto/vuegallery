@@ -30,7 +30,7 @@
           />
         </transition>
       </div>
-    </transition>>
+    </transition>
   </div>
 </template>
 
