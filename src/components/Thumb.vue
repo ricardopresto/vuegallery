@@ -1,6 +1,12 @@
 <template>
   <div id="thumbBox">
-    <img :src="filename" :width="thumbWidth" :height="thumbHeight" @click="imageClick" />
+    <img
+      :src="filename"
+      :width="thumbWidth"
+      :height="thumbHeight"
+      @click="imageClick"
+      @load="onImageLoad"
+    />
   </div>
 </template>
 
@@ -29,10 +35,10 @@ export default {
     };
   },
   mounted() {
-    this.aspectRatio > 1
-      ? (this.thumbWidth = this.thumbSize)
-      : (this.thumbHeight = this.thumbSize);
-    this.$emit("set-aspect", { index: this.index, aspect: this.aspectRatio });
+    //  this.aspectRatio > 1
+    //    ? (this.thumbWidth = this.thumbSize)
+    //    : (this.thumbHeight = this.thumbSize);
+    //  this.$emit("set-aspect", { index: this.index, aspect: this.aspectRatio });
   },
   methods: {
     imageClick() {
@@ -40,6 +46,12 @@ export default {
         image: this.image,
         index: this.index
       });
+    },
+    onImageLoad() {
+      this.aspectRatio > 1
+        ? (this.thumbWidth = this.thumbSize)
+        : (this.thumbHeight = this.thumbSize);
+      this.$emit("set-aspect", { index: this.index, aspect: this.aspectRatio });
     }
   }
 };
