@@ -20,6 +20,8 @@
             v-if="preview1"
             :currentImage="currentImage"
             :aspect="aspect"
+            @prev-image="prevImage"
+            @next-image="nextImage"
           />
           <Preview
             class="preview"
@@ -27,6 +29,8 @@
             v-if="!preview1"
             :currentImage="currentImage"
             :aspect="aspect"
+            @prev-image="prevImage"
+            @next-image="nextImage"
           />
         </transition>
       </div>
@@ -130,6 +134,7 @@ export default {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  position: fixed;
 }
 .preview {
   position: absolute;
