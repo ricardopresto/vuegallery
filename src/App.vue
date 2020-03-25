@@ -19,6 +19,8 @@
             key="preview1"
             v-if="preview1"
             :currentImage="currentImage"
+            :firstImage="firstImage"
+            :lastImage="lastImage"
             :aspect="aspect"
             @prev-image="prevImage"
             @next-image="nextImage"
@@ -28,6 +30,8 @@
             key="preview2"
             v-if="!preview1"
             :currentImage="currentImage"
+            :firstImage="firstImage"
+            :lastImage="lastImage"
             :aspect="aspect"
             @prev-image="prevImage"
             @next-image="nextImage"
@@ -54,7 +58,9 @@ export default {
       currentImage: undefined,
       currentImageIndex: undefined,
       aspect: undefined,
-      direction: "next"
+      direction: "next",
+      firstImage: false,
+      lastImage: false
     };
   },
   components: { Thumb, Preview },
@@ -70,24 +76,35 @@ export default {
       this.aspect = this.aspectList[this.currentImageIndex];
       this.preview = true;
       this.preview1 = true;
+      this.positionCheck();
     },
     nextImage() {
-      if (this.currentImageIndex < this.imageList.length - 1) {
+      if (!this.lastImage) {
         this.direction = "next";
         this.currentImageIndex++;
         this.currentImage = this.imageList[this.currentImageIndex];
         this.aspect = this.aspectList[this.currentImageIndex];
         this.preview1 = !this.preview1;
       }
+      this.positionCheck();
     },
     prevImage() {
-      if (this.currentImageIndex > 0) {
+      if (!this.firstImage) {
         this.direction = "prev";
         this.currentImageIndex--;
         this.currentImage = this.imageList[this.currentImageIndex];
         this.aspect = this.aspectList[this.currentImageIndex];
         this.preview1 = !this.preview1;
       }
+      this.positionCheck();
+    },
+    positionCheck() {
+      this.currentImageIndex == 0
+        ? (this.firstImage = true)
+        : (this.firstImage = false);
+      this.currentImageIndex == this.imageList.length - 1
+        ? (this.lastImage = true)
+        : (this.lastImage = false);
     },
     hideImage() {
       this.preview = false;

@@ -4,6 +4,7 @@
     <div id="overlay">
       <div id="overlayLeft" class="overlayEdge" @click.stop="$emit('prev-image')">
         <svg
+          v-show="!firstImage"
           xmlns="http://www.w3.org/2000/svg"
           width="100"
           height="100"
@@ -19,6 +20,7 @@
       </div>
       <div id="overlayRight" class="overlayEdge" @click.stop="$emit('next-image')">
         <svg
+          v-show="!lastImage"
           xmlns="http://www.w3.org/2000/svg"
           width="100"
           height="100"
@@ -39,7 +41,7 @@
 <script>
 export default {
   name: "Preview",
-  props: ["currentImage", "aspect"],
+  props: ["currentImage", "firstImage", "lastImage", "aspect"],
   data() {
     return {
       imageWidth: undefined,
