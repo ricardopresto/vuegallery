@@ -12,6 +12,6 @@ const imageArray = [
   ["ff_edit1", "ff_edit2", "ff_edit3", "ff_edit4"]
 ];
 
-const nameArray = ["Ivy", "Fiddler"];
+const nameArray = ["Ivy", "Fiddler's Ferry"];
 
 export { imageArray, nameArray };

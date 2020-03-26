@@ -56,7 +56,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid lightgrey;
+  border: 1px solid #d3d3d3;
   padding: 5px;
   margin: 5px;
 }

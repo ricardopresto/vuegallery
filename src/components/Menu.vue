@@ -36,12 +36,14 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
+  cursor: default;
+  user-select: none;
 }
 #menuBtn {
-  width: 200px;
+  width: 210px;
   height: 30px;
-  margin-right: 20px;
-  border: 1px solid #666;
+  margin-right: 5px;
+  border: 1px solid #d3d3d3;
   position: relative;
   display: flex;
   align-items: center;
@@ -52,26 +54,26 @@ export default {
   opacity: 1;
 }
 #menuBox {
-  width: 200px;
+  width: 210px;
   height: min-content;
-  border: 1px solid #666;
   position: absolute;
   top: 28px;
   visibility: hidden;
   opacity: 0;
-  transition: all 0.2s;
+  transition: all 0.1s;
 }
 .menuItem {
   width: 100%;
   height: 30px;
   opacity: 1;
-  background-color: #888;
+  background-color: #d3d3d3;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.1s;
 }
 .menuItem:hover {
-  background-color: #555;
+  background-color: #a0a0a0;
 }
 #caption {
   margin-left: 30px;
