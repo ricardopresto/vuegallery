@@ -56,7 +56,7 @@ export default {
   mounted() {
     let aspectScreen = window.innerWidth / window.innerHeight;
     if (this.aspect > aspectScreen) {
-      this.imageWidth = window.innerWidth * 0.85;
+      this.imageWidth = window.innerWidth * 0.8;
     } else {
       this.imageHeight = window.innerHeight * 0.8;
     }
@@ -76,8 +76,10 @@ export default {
   justify-content: center;
   padding: 20px;
   background-color: #fff;
-  border: 1px solid #333;
+  border: 1px solid #aaa;
+  border-radius: 6px;
   position: relative;
+  box-shadow: 4px 4px 20px #888;
 }
 #overlay {
   width: 100%;

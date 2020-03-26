@@ -53,11 +53,16 @@ export default {
 
 <style scoped>
 #thumbBox {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #d3d3d3;
-  padding: 5px;
-  margin: 5px;
+  margin: 15px;
+}
+img {
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  box-shadow: 1px 1px 8px #bbb;
+}
+img:hover {
+  box-shadow: 3px 3px 8px #bbb;
 }
 </style>

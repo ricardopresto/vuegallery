@@ -77,7 +77,9 @@ export default {
   width: 200px;
   height: 30px;
   margin-right: 10px;
-  border: 1px solid #d3d3d3;
+  border: 1px solid #aaa;
+  box-shadow: 2px 2px 8px #aaa, inset -2px -2px 8px #aaa;
+  border-radius: 15px;
   position: relative;
   display: flex;
   align-items: center;
@@ -99,15 +101,19 @@ export default {
 .menuItem {
   width: 100%;
   height: 30px;
-  opacity: 1;
-  background-color: #d3d3d3;
+  border: 1px solid #aaa;
+  box-shadow: 1px 1px 4px #aaa, inset -1px -1px 4px #aaa;
+  border-radius: 15px;
+  opacity: 0.8;
+  background-color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.1s;
 }
 .menuItem:hover {
-  background-color: #a0a0a0;
+  box-shadow: 1px 1px 4px #aaa, inset -2px -2px 6px #aaa;
+  background-color: #ddd;
 }
 #caption {
   margin-left: 30px;

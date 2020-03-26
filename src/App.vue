@@ -7,7 +7,7 @@
       @list-change="listChange($event)"
       @title-toggle="titles = !titles"
     />
-    <div id="grid">
+    <div id="flexLayout">
       <Thumb
         v-for="(image, index) in imageArray[currentList]"
         :index="index"
@@ -67,7 +67,7 @@ export default {
       titleArray: titleArray,
       currentList: 0,
       currentListName: "",
-      thumbSize: 200,
+      thumbSize: 260,
       titles: true,
       preview: false,
       preview1: false,
@@ -156,11 +156,13 @@ export default {
 <style scoped>
 #app {
   position: relative;
+  padding: 20px;
 }
-#grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  grid-gap: 5px;
+#flexLayout {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
 }
 .previewBackground {
   position: absolute;
@@ -186,6 +188,7 @@ export default {
   margin-top: 10px;
   border-radius: 15px;
   max-width: 90%;
+  box-shadow: 2px 2px 8px #222, inset -2px -2px 8px #222;
 }
 .next-enter-active,
 .prev-enter-active {
