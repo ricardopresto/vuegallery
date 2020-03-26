@@ -11,6 +11,40 @@
         >
           <div class="caption">{{name}}</div>
         </div>
+        <div id="titleOption" class="menuItem" @click="$emit('title-toggle')">
+          <span>Titles</span>
+          <span>
+            <svg
+              v-show="titles"
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#0f0"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="22 8 11 19 6 14" />
+            </svg>
+            <svg
+              v-show="!titles"
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ff0000"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="20" y1="8" x2="8" y2="20" />
+              <line x1="8" y1="8" x2="20" y2="20" />
+            </svg>
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -19,7 +53,7 @@
 <script>
 export default {
   name: "Menu",
-  props: ["currentList", "nameArray"],
+  props: ["currentList", "nameArray", "titles"],
   methods: {
     menuClick(e) {
       this.$emit("list-change", e);
@@ -40,9 +74,9 @@ export default {
   user-select: none;
 }
 #menuBtn {
-  width: 210px;
+  width: 200px;
   height: 30px;
-  margin-right: 5px;
+  margin-right: 10px;
   border: 1px solid #d3d3d3;
   position: relative;
   display: flex;
@@ -54,7 +88,7 @@ export default {
   opacity: 1;
 }
 #menuBox {
-  width: 210px;
+  width: 200px;
   height: min-content;
   position: absolute;
   top: 28px;

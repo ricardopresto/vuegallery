@@ -1,6 +1,12 @@
 <template>
   <div id="app">
-    <Menu :currentList="currentList" :nameArray="nameArray" @list-change="listChange($event)" />
+    <Menu
+      :currentList="currentList"
+      :nameArray="nameArray"
+      :titles="titles"
+      @list-change="listChange($event)"
+      @title-toggle="titles = !titles"
+    />
     <div id="grid">
       <Thumb
         v-for="(image, index) in imageArray[currentList]"
@@ -20,9 +26,12 @@
             key="preview1"
             v-if="preview1"
             :currentImage="currentImage"
+            :currentImageIndex="currentImageIndex"
             :firstImage="firstImage"
             :lastImage="lastImage"
             :aspect="aspect"
+            :titleList="titleArray[currentList]"
+            :titles="titles"
             @prev-image="prevImage"
             @next-image="nextImage"
           />
@@ -31,9 +40,12 @@
             key="preview2"
             v-if="!preview1"
             :currentImage="currentImage"
+            :currentImageIndex="currentImageIndex"
             :firstImage="firstImage"
             :lastImage="lastImage"
             :aspect="aspect"
+            :titleList="titleArray[currentList]"
+            :titles="titles"
             @prev-image="prevImage"
             @next-image="nextImage"
           />
@@ -47,7 +59,7 @@
 import Thumb from "./components/Thumb.vue";
 import Preview from "./components/Preview.vue";
 import Menu from "./components/Menu.vue";
-import { imageArray, nameArray } from "./components/imageList";
+import { imageArray, nameArray, titleArray } from "./components/imageList";
 
 export default {
   name: "App",
@@ -57,9 +69,11 @@ export default {
       aspectList: [],
       imageArray: imageArray,
       nameArray: nameArray,
+      titleArray: titleArray,
       currentList: 0,
       currentListName: "",
       thumbSize: 200,
+      titles: true,
       preview: false,
       preview1: false,
       currentImage: undefined,
