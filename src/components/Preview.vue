@@ -1,58 +1,47 @@
 <template>
-  <div id="wrapper">
-    <div id="container">
-      <img :src="filename" :width="imageWidth" :height="imageHeight" />
-      <div id="overlay">
-        <div id="overlayLeft" class="overlayEdge" @click.stop="$emit('prev-image')">
-          <svg
-            v-show="!firstImage"
-            xmlns="http://www.w3.org/2000/svg"
-            width="100"
-            height="100"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#fff"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-        </div>
-        <div id="overlayRight" class="overlayEdge" @click.stop="$emit('next-image')">
-          <svg
-            v-show="!lastImage"
-            xmlns="http://www.w3.org/2000/svg"
-            width="100"
-            height="100"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#fff"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M9 18l6-6-6-6" />
-          </svg>
-        </div>
+  <div id="container">
+    <img :src="filename" :width="imageWidth" :height="imageHeight" />
+    <div id="overlay">
+      <div id="overlayLeft" class="overlayEdge" @click.stop="$emit('prev-image')">
+        <svg
+          v-show="!firstImage"
+          xmlns="http://www.w3.org/2000/svg"
+          width="100"
+          height="100"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#fff"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+      </div>
+      <div id="overlayRight" class="overlayEdge" @click.stop="$emit('next-image')">
+        <svg
+          v-show="!lastImage"
+          xmlns="http://www.w3.org/2000/svg"
+          width="100"
+          height="100"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#fff"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M9 18l6-6-6-6" />
+        </svg>
       </div>
     </div>
-    <div id="titleContainer" v-if="titles">{{titleList[currentImageIndex]}}</div>
   </div>
 </template>
 
 <script>
 export default {
   name: "Preview",
-  props: [
-    "currentImage",
-    "firstImage",
-    "lastImage",
-    "aspect",
-    "titles",
-    "titleList",
-    "currentImageIndex"
-  ],
+  props: ["currentImage", "firstImage", "lastImage", "aspect"],
   data() {
     return {
       imageWidth: undefined,
@@ -88,6 +77,7 @@ export default {
   padding: 20px;
   background-color: #fff;
   border: 1px solid #333;
+  position: relative;
 }
 #overlay {
   width: 100%;
@@ -105,24 +95,13 @@ export default {
   align-items: center;
 }
 .overlayEdge:hover {
-  opacity: 0.5;
+  opacity: 0.6;
 }
 #overlayLeft {
   justify-content: flex-start;
 }
 #overlayRight {
   justify-content: flex-end;
-}
-#titleContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 30px;
-  background-color: #444;
-  color: #fff;
-  padding: 5px 150px;
-  margin-top: 10px;
-  border-radius: 15px;
 }
 @media screen and (max-width: 400px) {
   #container {

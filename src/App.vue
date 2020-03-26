@@ -20,18 +20,15 @@
     </div>
     <transition name="appear">
       <div class="previewBackground" v-if="preview" @click="hideImage">
-        <transition :name="direction">
+        <transition :name="direction" mode="out-in">
           <Preview
             class="preview"
             key="preview1"
             v-if="preview1"
             :currentImage="currentImage"
-            :currentImageIndex="currentImageIndex"
             :firstImage="firstImage"
             :lastImage="lastImage"
             :aspect="aspect"
-            :titleList="titleArray[currentList]"
-            :titles="titles"
             @prev-image="prevImage"
             @next-image="nextImage"
           />
@@ -40,16 +37,14 @@
             key="preview2"
             v-if="!preview1"
             :currentImage="currentImage"
-            :currentImageIndex="currentImageIndex"
             :firstImage="firstImage"
             :lastImage="lastImage"
             :aspect="aspect"
-            :titleList="titleArray[currentList]"
-            :titles="titles"
             @prev-image="prevImage"
             @next-image="nextImage"
           />
         </transition>
+        <div id="titleContainer" v-if="titles">{{titleArray[currentList][currentImageIndex]}}</div>
       </div>
     </transition>
   </div>
@@ -174,37 +169,47 @@ export default {
   top: 0;
   background: rgba(255, 255, 255, 0.6);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   position: fixed;
 }
-.preview {
-  position: absolute;
+#titleContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  background-color: #444;
+  color: #fff;
+  padding: 5px 100px;
+  margin-top: 10px;
+  border-radius: 15px;
+  max-width: 90%;
 }
 .next-enter-active,
 .prev-enter-active {
-  transition: all 0.2s ease-out;
+  transition: all 0.1s ease-out;
 }
 .next-leave-active,
 .prev-leave-active {
-  transition: all 0.2s ease-in;
+  transition: all 0.1s ease-in;
 }
 .next-enter {
   opacity: 0;
-  transform: translateX(400px);
+  transform: translateX(200px);
 }
 .next-leave-to {
   opacity: 0;
-  transform: translateX(-400px);
+  transform: translateX(-200px);
 }
 .prev-enter {
   opacity: 0;
-  transform: translateX(-400px);
+  transform: translateX(-200px);
 }
 .prev-leave-to {
   opacity: 0;
-  transform: translateX(400px);
+  transform: translateX(200px);
 }
 .appear-enter-active {
   transition: all 0.1s ease-out;
@@ -213,7 +218,7 @@ export default {
   opacity: 0;
 }
 .appear-leave-active {
-  transition: all 0.1s ease-out;
+  transition: all 0.1s ease-in;
 }
 .appear-leave-to {
   opacity: 0;
