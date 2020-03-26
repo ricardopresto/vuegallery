@@ -1,8 +1,9 @@
 <template>
   <div id="app">
+    <Menu :currentList="currentList" :nameArray="nameArray" @list-change="listChange($event)" />
     <div id="grid">
       <Thumb
-        v-for="(image, index) in imageList"
+        v-for="(image, index) in imageArray[currentList]"
         :index="index"
         :key="index"
         :image="image"
@@ -45,13 +46,19 @@
 <script>
 import Thumb from "./components/Thumb.vue";
 import Preview from "./components/Preview.vue";
-import imageList from "./components/imageList";
+import Menu from "./components/Menu.vue";
+import { imageArray, nameArray } from "./components/imageList";
+
 export default {
   name: "App",
   data() {
     return {
       imageList: [],
       aspectList: [],
+      imageArray: imageArray,
+      nameArray: nameArray,
+      currentList: 0,
+      currentListName: "",
       thumbSize: 200,
       preview: false,
       preview1: false,
@@ -63,9 +70,10 @@ export default {
       lastImage: false
     };
   },
-  components: { Thumb, Preview },
+  components: { Thumb, Preview, Menu },
   mounted() {
-    this.imageList = imageList;
+    this.imageList = imageArray[this.currentList];
+    this.currentListName = nameArray[this.currentList];
     window.addEventListener("keydown", this.key);
   },
   methods: {
@@ -102,7 +110,7 @@ export default {
       this.currentImageIndex == 0
         ? (this.firstImage = true)
         : (this.firstImage = false);
-      this.currentImageIndex == this.imageList.length - 1
+      this.currentImageIndex == this.imageArray[this.currentList].length - 1
         ? (this.lastImage = true)
         : (this.lastImage = false);
     },
@@ -119,6 +127,10 @@ export default {
     },
     setAspect(aspectObject) {
       this.aspectList[aspectObject.index] = aspectObject.aspect;
+    },
+    listChange(e) {
+      this.currentList = e;
+      this.imageList = imageArray[this.currentList];
     }
   }
 };

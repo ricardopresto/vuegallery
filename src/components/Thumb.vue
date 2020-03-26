@@ -17,21 +17,15 @@ export default {
   computed: {
     filename: function() {
       return require(`../assets/images/thumbs/${this.image}_th.jpg`);
-    },
-    originalWidth: function() {
-      return this.$el.firstChild.naturalWidth;
-    },
-    originalHeight: function() {
-      return this.$el.firstChild.naturalHeight;
-    },
-    aspectRatio: function() {
-      return this.originalWidth / this.originalHeight;
     }
   },
   data() {
     return {
       thumbWidth: undefined,
-      thumbHeight: undefined
+      thumbHeight: undefined,
+      aspectRatio: undefined,
+      originalHeight: undefined,
+      originalWidth: undefined
     };
   },
   methods: {
@@ -42,6 +36,12 @@ export default {
       });
     },
     onImageLoad() {
+      this.thumbWidth = undefined;
+      this.thumbHeight = undefined;
+      this.originalWidth = this.$el.firstChild.naturalWidth;
+      this.originalHeight = this.$el.firstChild.naturalHeight;
+      this.aspectRatio = this.originalWidth / this.originalHeight;
+
       this.aspectRatio > 1
         ? (this.thumbWidth = this.thumbSize)
         : (this.thumbHeight = this.thumbSize);
