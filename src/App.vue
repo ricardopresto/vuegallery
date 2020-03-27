@@ -2,7 +2,6 @@
   <div id="app">
     <Menu
       :currentList="currentList"
-      :nameArray="nameArray"
       :titles="titles"
       @list-change="listChange($event)"
       @title-toggle="titles = !titles"
@@ -54,7 +53,7 @@
 import Thumb from "./components/Thumb.vue";
 import Preview from "./components/Preview.vue";
 import Menu from "./components/Menu.vue";
-import { imageArray, nameArray, titleArray } from "./components/imageList";
+import { imageArray, titleArray } from "./components/imageList";
 
 export default {
   name: "App",
@@ -63,7 +62,6 @@ export default {
       imageList: [],
       aspectList: [],
       imageArray: imageArray,
-      nameArray: nameArray,
       titleArray: titleArray,
       currentList: 0,
       currentListName: "",
@@ -82,7 +80,6 @@ export default {
   components: { Thumb, Preview, Menu },
   mounted() {
     this.imageList = imageArray[this.currentList];
-    this.currentListName = nameArray[this.currentList];
     window.addEventListener("keydown", this.key);
   },
   methods: {

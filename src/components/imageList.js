@@ -3,7 +3,6 @@ const imageArray = [
     "launchy3",
     "dung1",
     "ivy1",
-    "olympic2",
     "scafellmoon",
     "launchy2",
     "runcorn",
@@ -41,14 +40,11 @@ const imageArray = [
   ]
 ];
 
-const nameArray = ["Black & White", "Colour"];
-
 const titleArray = [
   [
     "Launchy Gill, Thirlmere",
     "Dungeness, Kent",
     "Ivy",
-    "Olympic Stadium, Berlin",
     "Moon over Scafell, Wasdale",
     "Launchy Gill, Thirlmere",
     "Runcorn Bridge, Halton",
@@ -86,4 +82,4 @@ const titleArray = [
   ]
 ];
 
-export { imageArray, nameArray, titleArray };
+export { imageArray, titleArray };

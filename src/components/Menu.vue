@@ -1,15 +1,14 @@
 <template>
   <div id="container">
     <div id="menuBtn">
-      <div class="caption">{{nameArray[currentList]}}</div>
+      <div class="caption" v-if="currentList == 0">Black & White</div>
+      <div class="caption" v-if="currentList == 1">Colour</div>
       <div id="menuBox">
-        <div
-          v-for="(name, index) in nameArray"
-          :key="index"
-          class="menuItem"
-          @click="menuClick(index)"
-        >
-          <div class="caption">{{name}}</div>
+        <div v-if="currentList == 0" class="menuItem" @click="menuClick(1)">
+          <div class="caption">Colour</div>
+        </div>
+        <div v-if="currentList == 1" class="menuItem" @click="menuClick(0)">
+          <div class="caption">Black & White</div>
         </div>
         <div id="titleOption" class="menuItem" @click="$emit('title-toggle')">
           <span>Titles</span>
@@ -53,7 +52,7 @@
 <script>
 export default {
   name: "Menu",
-  props: ["currentList", "nameArray", "titles"],
+  props: ["currentList", "titles"],
   methods: {
     menuClick(e) {
       this.$emit("list-change", e);
