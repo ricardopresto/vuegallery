@@ -53,7 +53,7 @@ export default {
 
 <style scoped>
 #thumbBox {
-  margin: 15px;
+  margin: 30px;
 }
 img {
   padding: 10px;
