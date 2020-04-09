@@ -18,7 +18,7 @@
       />
     </div>
     <transition name="appear">
-      <div class="previewBackground" v-if="preview" @click="hideImage">
+      <div id="previewBackground" v-if="preview" @click="hideImage">
         <transition :name="direction" mode="out-in">
           <Preview
             class="preview"
@@ -43,7 +43,9 @@
             @next-image="nextImage"
           />
         </transition>
-        <div id="titleContainer" v-if="titles">{{titleArray[currentList][currentImageIndex]}}</div>
+        <div id="titleContainer" v-if="titles">
+          {{ titleArray[currentList][currentImageIndex] }}
+        </div>
       </div>
     </transition>
   </div>
@@ -120,9 +122,11 @@ export default {
         ? (this.lastImage = true)
         : (this.lastImage = false);
     },
-    hideImage() {
-      this.preview = false;
-      this.preview1 = false;
+    hideImage(e) {
+      if (e.target.id == "previewBackground") {
+        this.preview = false;
+        this.preview1 = false;
+      }
     },
     key(event) {
       if (event.key == "ArrowRight") {
@@ -154,6 +158,7 @@ export default {
 #app {
   position: relative;
   padding: 20px;
+  background-color: #f8f8f8;
 }
 #flexLayout {
   display: flex;
@@ -161,7 +166,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.previewBackground {
+#previewBackground {
   position: absolute;
   width: 100vw;
   height: 100vh;

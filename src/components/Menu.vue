@@ -77,6 +77,7 @@ export default {
   height: 30px;
   margin-right: 10px;
   border: 1px solid #aaa;
+  background-color: #fff;
   box-shadow: 2px 2px 8px #aaa, inset -2px -2px 8px #aaa;
   border-radius: 15px;
   position: relative;

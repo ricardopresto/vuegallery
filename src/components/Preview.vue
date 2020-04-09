@@ -1,8 +1,17 @@
 <template>
   <div id="container">
     <img :src="filename" :width="imageWidth" :height="imageHeight" />
-    <div id="overlay">
-      <div id="overlayLeft" class="overlayEdge" @click.stop="$emit('prev-image')">
+    <div
+      id="overlay"
+      @touchstart="touchS"
+      @touchmove="touchM"
+      @touchend="touchE"
+    >
+      <div
+        id="overlayLeft"
+        class="overlayEdge"
+        @click.stop="$emit('prev-image')"
+      >
         <svg
           v-show="!firstImage"
           xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +27,11 @@
           <path d="M15 18l-6-6 6-6" />
         </svg>
       </div>
-      <div id="overlayRight" class="overlayEdge" @click.stop="$emit('next-image')">
+      <div
+        id="overlayRight"
+        class="overlayEdge"
+        @click.stop="$emit('next-image')"
+      >
         <svg
           v-show="!lastImage"
           xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +58,9 @@ export default {
   data() {
     return {
       imageWidth: undefined,
-      imageHeight: undefined
+      imageHeight: undefined,
+      touch1: 0,
+      touch2: undefined
     };
   },
   computed: {
@@ -59,6 +74,19 @@ export default {
       this.imageWidth = window.innerWidth * 0.8;
     } else {
       this.imageHeight = window.innerHeight * 0.8;
+    }
+  },
+  methods: {
+    touchS(e) {
+      this.touch1 = e.targetTouches[0].clientX;
+    },
+    touchM(e) {
+      this.touch2 = e.targetTouches[0].clientX;
+    },
+    touchE() {
+      this.touch2 > this.touch1
+        ? this.$emit("prev-image")
+        : this.$emit("next-image");
     }
   }
 };
