@@ -119,4 +119,12 @@ export default {
   margin-left: 30px;
   margin-top: 5px;
 }
+@media screen and (max-width: 400px) {
+  #container {
+    justify-content: center;
+  }
+  #menuBtn {
+    margin-right: 0;
+  }
+}
 </style>

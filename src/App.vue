@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @touchstart="touched">
     <Menu
       :currentList="currentList"
       :titles="titles"
@@ -28,6 +28,7 @@
             :firstImage="firstImage"
             :lastImage="lastImage"
             :aspect="aspect"
+            :touchScreen="touchScreen"
             @prev-image="prevImage"
             @next-image="nextImage"
           />
@@ -39,6 +40,7 @@
             :firstImage="firstImage"
             :lastImage="lastImage"
             :aspect="aspect"
+            :touchScreen="touchScreen"
             @prev-image="prevImage"
             @next-image="nextImage"
           />
@@ -76,7 +78,8 @@ export default {
       aspect: undefined,
       direction: "next",
       firstImage: false,
-      lastImage: false
+      lastImage: false,
+      touchScreen: false
     };
   },
   components: { Thumb, Preview, Menu },
@@ -141,6 +144,9 @@ export default {
     listChange(e) {
       this.currentList = e;
       this.imageList = imageArray[this.currentList];
+    },
+    touched() {
+      this.touchScreen = true;
     }
   }
 };
@@ -151,6 +157,12 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Gotu", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+div {
+  border: 0px solid red;
 }
 </style>
 
@@ -171,6 +183,7 @@ export default {
   width: 100vw;
   height: 100vh;
   top: 0;
+  left: 0;
   background: rgba(255, 255, 255, 0.6);
   display: flex;
   flex-direction: column;
@@ -186,11 +199,12 @@ export default {
   height: 30px;
   background-color: #444;
   color: #fff;
-  padding: 5px 100px;
+  padding: 5px 80px;
   margin-top: 10px;
   border-radius: 15px;
   max-width: 90%;
   box-shadow: 2px 2px 8px #222, inset -2px -2px 8px #222;
+  font-size: 0.9rem;
 }
 .next-enter-active,
 .prev-enter-active {
@@ -227,5 +241,13 @@ export default {
 }
 .appear-leave-to {
   opacity: 0;
+}
+@media screen and (max-width: 400px) {
+  #titleContainer {
+    padding: 5px 20px;
+    min-width: 70%;
+    height: min-content;
+    font-size: 0.8rem;
+  }
 }
 </style>

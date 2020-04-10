@@ -10,6 +10,7 @@
       <div
         id="overlayLeft"
         class="overlayEdge"
+        v-if="!touchScreen"
         @click.stop="$emit('prev-image')"
       >
         <svg
@@ -30,6 +31,7 @@
       <div
         id="overlayRight"
         class="overlayEdge"
+        v-if="!touchScreen"
         @click.stop="$emit('next-image')"
       >
         <svg
@@ -54,12 +56,12 @@
 <script>
 export default {
   name: "Preview",
-  props: ["currentImage", "firstImage", "lastImage", "aspect"],
+  props: ["currentImage", "firstImage", "lastImage", "aspect", "touchScreen"],
   data() {
     return {
       imageWidth: undefined,
       imageHeight: undefined,
-      touch1: 0,
+      touch1: undefined,
       touch2: undefined
     };
   },
@@ -84,9 +86,11 @@ export default {
       this.touch2 = e.targetTouches[0].clientX;
     },
     touchE() {
-      this.touch2 > this.touch1
-        ? this.$emit("prev-image")
-        : this.$emit("next-image");
+      if (this.touch2 > this.touch1) {
+        this.$emit("prev-image");
+      } else if (this.touch2 < this.touch1) {
+        this.$emit("next-image");
+      }
     }
   }
 };
