@@ -170,7 +170,7 @@ div {
 #app {
   position: relative;
   padding: 20px;
-  background-color: #f8f8f8;
+  background-color: #f4f4f4;
 }
 #flexLayout {
   display: flex;
